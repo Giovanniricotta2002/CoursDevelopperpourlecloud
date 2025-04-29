@@ -1,0 +1,238 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Cours1",
+        "description": "CRD Licence",
+        "version": "1.0.0"
+    },
+    "paths": {
+        "/licences/new": {
+            "post": {
+                "tags": [
+                    "Licences"
+                ],
+                "summary": "Create a new licence",
+                "operationId": "post_app_licences_post",
+                "requestBody": {
+                    "description": "Licence data",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "tenant": {
+                                        "type": "string"
+                                    },
+                                    "clientId": {
+                                        "type": "integer"
+                                    },
+                                    "name": {
+                                        "type": "string"
+                                    },
+                                    "api_name": {
+                                        "type": "string"
+                                    },
+                                    "licence_key": {
+                                        "type": "string"
+                                    },
+                                    "status": {
+                                        "type": "string"
+                                    },
+                                    "expirationDate": {
+                                        "type": "string",
+                                        "format": "date-time"
+                                    },
+                                    "usageLimite": {
+                                        "type": "integer"
+                                    },
+                                    "usageCount": {
+                                        "type": "integer"
+                                    },
+                                    "rateLimit": {
+                                        "type": "integer"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Licence created",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "res": {
+                                            "$ref": "#/components/schemas/Licences"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "406": {
+                        "description": "Invalid input"
+                    },
+                    "404": {
+                        "description": "Server error"
+                    }
+                }
+            }
+        },
+        "/licences/{tenant}": {
+            "get": {
+                "summary": "Get licences by tenant",
+                "operationId": "get_app_licences_get",
+                "parameters": [
+                    {
+                        "name": "tenant",
+                        "in": "path",
+                        "description": "Tenant identifier",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Licence data",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "licence": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "App\\Entity\\Licences"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Licence not found"
+                    }
+                }
+            },
+            "delete": {
+                "summary": "Delete a licence by tenant",
+                "operationId": "delete_app_licences_delete",
+                "parameters": [
+                    {
+                        "name": "tenant",
+                        "in": "path",
+                        "description": "Tenant identifier",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "303": {
+                        "description": "Licence deleted"
+                    },
+                    "404": {
+                        "description": "Licence not found"
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "Licences": {
+                "required": [
+                    "id",
+                    "tenant",
+                    "status",
+                    "creationDate",
+                    "expirationDate",
+                    "usageLimite",
+                    "rateLimit",
+                    "createdBy",
+                    "apiName"
+                ],
+                "properties": {
+                    "id": {
+                        "type": "integer"
+                    },
+                    "tenant": {
+                        "type": "string"
+                    },
+                    "name": {
+                        "type": "string",
+                        "nullable": true
+                    },
+                    "clientId": {
+                        "type": "integer",
+                        "nullable": true
+                    },
+                    "status": {
+                        "$ref": "#/components/schemas/Status"
+                    },
+                    "creationDate": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "expirationDate": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "usageLimite": {
+                        "type": "integer"
+                    },
+                    "usageCount": {
+                        "type": "string",
+                        "nullable": true
+                    },
+                    "rateLimit": {
+                        "type": "integer"
+                    },
+                    "lastUsedAt": {
+                        "type": "string",
+                        "format": "date-time",
+                        "nullable": true
+                    },
+                    "createdBy": {
+                        "type": "string"
+                    },
+                    "description": {
+                        "type": "string",
+                        "nullable": true
+                    },
+                    "apiName": {
+                        "type": "string"
+                    },
+                    "licenceKey": {
+                        "type": "string",
+                        "nullable": true
+                    }
+                },
+                "type": "object"
+            },
+            "Status": {
+                "type": "string",
+                "enum": [
+                    "active",
+                    "inactive",
+                    "pending",
+                    "expired",
+                    "revoked"
+                ]
+            }
+        }
+    },
+    "tags": [
+        {
+            "name": "Licences"
+        }
+    ]
+}

@@ -1,2 +1,3 @@
 cour1/config/secrets/dev/dev.decrypt.private.php
 cour1/config/secrets/dev/dev.encrypt.public.php
+cour1/phpcs.xml
