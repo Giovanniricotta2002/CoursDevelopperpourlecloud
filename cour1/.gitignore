@@ -18,3 +18,7 @@
 ###> phpstan/phpstan ###
 phpstan.neon
 ###< phpstan/phpstan ###
+
+
+cour1/config/secrets/dev/dev.decrypt.private.php
+cour1/config/secrets/dev/dev.encrypt.public.php
