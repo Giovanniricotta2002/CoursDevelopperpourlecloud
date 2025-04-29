@@ -14,9 +14,9 @@ services:
   bdd:
     image: postgres:15.8-bookworm
     environment:
-      POSTGRES_DB: flood_detection
-      POSTGRES_USER: flood_detection
-      POSTGRES_PASSWORD: flood_detection
+      POSTGRES_DB: cours1
+      POSTGRES_USER: cours1
+      POSTGRES_PASSWORD: cours1
     ports:
       - $BDD_PORT:5432
     volumes:
