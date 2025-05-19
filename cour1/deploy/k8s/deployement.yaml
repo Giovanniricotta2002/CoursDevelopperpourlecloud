@@ -1,4 +1,4 @@
-appVersion: apps/v1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: "tenants-api"
@@ -9,17 +9,20 @@ spec:
   selector:
     matchLabels:
       app: "tenants-api"
+  strategy:
+    rollingUpdate:
+      maxUnavailable: 1
+      maxSurge: 1
   template:
     metadata:
       labels:
         app: "tenants-api"
     spec:
       containers:
-        - name: "tenants-api"
-          image: "tenant-api:v1"
+        - name: tenants-api
+          image: tenant-api:v1
           imagePullPolicy: Never
           ports:
             - containerPort: 8080
-          env:
-            - name: ENV
-              value: "dev"
+              name: http,
+              protocol: TCP
