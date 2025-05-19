@@ -1,0 +1,34 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: app
+  namespace: cours-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: web-app
+  template:
+    metadata:
+      labels:
+        app: web-app
+    spec:
+      containers:
+        - name: app
+          image: cours
+          ports:
+            - containerPort: 80
+          volumeMounts:
+            - mountPath: /var/www/app
+              name: app-volume
+            - mountPath: /etc/localtime
+              name: localtime
+              readOnly: true
+      volumes:
+        - name: app-volume
+          persistentVolumeClaim:
+            claimName: app-pvc
+        - name: localtime
+          hostPath:
+            path: /etc/localtime
+            type: File
