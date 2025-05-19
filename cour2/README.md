@@ -5,5 +5,8 @@ helm repo add kubernetes-dashboard https://kubernetes.github.io/dashboard/
 helm upgrade --install kubernetes-dashboard kubernetes-dashboard/kubernetes-dashboard --create-namespace --namespace kubernetes-dashboard
 kubectl2 -n kubernetes-dashboard port-forward svc/kubernetes-dashboard-kong-proxy 8443:443
 kubectl2 apply -f ./k8s-dashboard-service-accounts.yaml
-kubectl -n kubernetes-dashboard create token admin-user
+kubectl2 -n kubernetes-dashboard create token admin-user
 helm install my-release oci://registry-1.docker.io/bitnamicharts/postgresql <- postgress
+helm create <nom> <- donner un nom
+kind load docker-image <nom>
+helm upgrade --install <nom> <nom>-0.1.0.tgz

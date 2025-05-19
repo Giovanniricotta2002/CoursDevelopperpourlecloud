@@ -1,0 +1,25 @@
+appVersion: apps/v1
+kind: Deployment
+metadata:
+  name: "tenants-api"
+  labels:
+    app: "tenants-api"
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: "tenants-api"
+  template:
+    metadata:
+      labels:
+        app: "tenants-api"
+    spec:
+      containers:
+        - name: "tenants-api"
+          image: "tenant-api:v1"
+          imagePullPolicy: Never
+          ports:
+            - containerPort: 8080
+          env:
+            - name: ENV
+              value: "dev"

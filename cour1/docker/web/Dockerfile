@@ -1,6 +1,6 @@
-FROM php:8.2.27-apache-bookworm
+FROM php:8.2.27-apache-bookworm AS base
 
-COPY --chown=root:root symfony.conf /etc/apache2/sites-available/symfony.conf
+COPY --chown=root:root docker/web/symfony.conf /etc/apache2/sites-available/symfony.conf
 
 RUN apt-get -qq update && \
     apt-get -qq install git libpq-dev libicu-dev locales libzip-dev libgd-dev libxml2-dev && \
@@ -24,3 +24,13 @@ WORKDIR /var/www/app
 
 ENV LANG=fr_FR.UTF-8
 ENV LANGUAGE=fr_FR.UTF-8
+
+
+
+FROM base AS app
+COPY --chown=user:user ../ /var/www/app
+RUN composer install && \
+    mkdir -p /var/www/app/var/cache /var/www/app/var/logs /var/www/app/public/bundles && \
+    chown -R user:user /var/www/app/var/cache /var/www/app/var/logs /var/www/app/public/bundles
+EXPOSE 80
+CMD ["apache2-foreground"]
