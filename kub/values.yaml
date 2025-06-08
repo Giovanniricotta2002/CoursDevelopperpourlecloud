@@ -1,0 +1,5 @@
+# values.yaml
+appDir: /chemin/vers/app
+appPort: 30080
+bddDir: /chemin/vers/bdd
+bddPort: 30090
